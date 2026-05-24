@@ -55,10 +55,10 @@ Put `.circom` files in `circuits/`. See `circuits/Multiplier.circom` for the exa
 ## Step 5: Compile the circuit
 
 ```bash
-npx hardhat zkit:compile
+npx hardhat zkit compile
 ```
 
-This generates `.r1cs`, `.wasm`, and `.sym` files under `zkit/artifacts/circuits/`. **Don't run `zkit:make` yet** — that would trigger ZKit's local-only trusted setup. We're going to run a proper multi-party ceremony instead.
+This generates `.r1cs`, `.wasm`, and `.sym` files under `zkit/artifacts/circuits/`. **Don't run `zkit make` yet** — that would trigger ZKit's local-only trusted setup. We're going to run a proper multi-party ceremony instead.
 
 ## Step 6: Trusted setup ceremony
 
@@ -128,7 +128,7 @@ cp ceremony/verification_key.json \
 ## Step 7: Generate the Solidity verifier
 
 ```bash
-npx hardhat zkit:verifiers
+npx hardhat zkit verifiers
 ```
 
 The verifier in `contracts/verifiers/` now matches the ceremony's verification key.
@@ -170,20 +170,24 @@ See `test/Multiplier.test.ts`. The suite covers:
 
 Add `generated-types/` and large auto-generated build artifacts to `.gitignore`, but **commit the ceremony folder in full** — auditors need it to re-verify the transcript.
 
-## ⚠️ Don't run `zkit:make` after the ceremony
+## ⚠️ Don't run `zkit make` after the ceremony
 
-`zkit:make` regenerates the zkey locally, overwriting your ceremony output. Once you've run a real ceremony, use this rebuild script instead:
+`zkit make` regenerates the zkey locally, overwriting your ceremony output. Once you've run a real ceremony, use this rebuild script instead:
 
 ```bash
 # scripts/rebuild.sh
 #!/bin/bash
 set -e
-npx hardhat zkit:compile
+npx hardhat zkit compile
+
 cp ceremony/circuit_final.zkey \
    zkit/artifacts/circuits/Multiplier.circom/Multiplier.groth16.zkey
+
 cp ceremony/verification_key.json \
    zkit/artifacts/circuits/Multiplier.circom/Multiplier.groth16.vkey.json
-npx hardhat zkit:verifiers
+
+npx hardhat zkit verifiers
+
 npx hardhat compile
 ```
 
@@ -196,13 +200,13 @@ If you change the circuit itself (new constraints), you must run a fresh ceremon
 | `HHE3: No Hardhat config file found` | Hardhat 3 installed. Downgrade to `hardhat@^2.22.0`. |
 | `ERESOLVE could not resolve dependency tree` | Hardhat 2 vs 3 mismatch. Confirm `npx hardhat --version`. |
 | `Cannot find module '@nomicfoundation/hardhat-toolbox'` | Run `npm install --save-dev @nomicfoundation/hardhat-toolbox`. |
-| `HH303: Unrecognized task 'zkit:make'` | Plugin not imported. Add `import "@solarity/hardhat-zkit";` to config. |
+| `HH303: Unrecognized task 'zkit make'` | Plugin not imported. Add `import "@solarity/hardhat-zkit";` to config. |
 | `HH305: Unrecognized param --show-stack-trace` | Plural: `--show-stack-traces`. |
 | `T3001: signal not initialized` (circom) | A signal has `===` but no `<==` / `<--` assignment. |
 | `DeclarationError: Identifier not found` (consumer contract) | Verifier's `verifyProof` signature differs from what your contract assumes. Check the generated file. |
 | `ReferenceError: circuit is not defined` (tests) | An `it(...)` block is outside the `describe` that owns the `before` hook. |
 | `Powers of tau is not enough` (ceremony) | Circuit has more constraints than the ptau supports. Use a larger one. |
-| Tests fail after ceremony | Forgot to run `zkit:verifiers` after copying the new zkey. The on-chain verifier hardcodes the key — they must match. |
+| Tests fail after ceremony | Forgot to run `zkit verifiers` after copying the new zkey. The on-chain verifier hardcodes the key — they must match. |
 
 ## Notes for real circuits
 
