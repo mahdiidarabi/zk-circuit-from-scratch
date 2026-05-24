@@ -1,0 +1,52 @@
+{
+  "_format": "hh-zkit-artifacts-1",
+  "circuitTemplateName": "Multiplier",
+  "circuitFileName": "Multiplier",
+  "circuitSourceName": "circuits/Multiplier.circom",
+  "baseCircuitInfo": {
+    "constraintsNumber": 5,
+    "signals": [
+      {
+        "name": "a",
+        "dimension": [],
+        "type": "Input",
+        "visibility": "Private"
+      },
+      {
+        "name": "b",
+        "dimension": [],
+        "type": "Input",
+        "visibility": "Private"
+      },
+      {
+        "name": "c",
+        "dimension": [],
+        "type": "Output",
+        "visibility": "Public"
+      }
+    ],
+    "parameters": {}
+  },
+  "compilerOutputFiles": {
+    "r1cs": {
+      "fileSourcePath": "/Users/mahdi/Work/src/github.com/mahdiidarabi/zk-circuit-from-scratch/zkit/artifacts/circuits/Multiplier.circom/Multiplier.r1cs",
+      "fileHash": "5365fcfe71742067d10360cd5d8272b6bbd737fe"
+    },
+    "wasm": {
+      "fileSourcePath": "/Users/mahdi/Work/src/github.com/mahdiidarabi/zk-circuit-from-scratch/zkit/artifacts/circuits/Multiplier.circom/Multiplier_js/Multiplier.wasm",
+      "fileHash": "f6691f5dfd4ec4d2a82e6fa2f73d87327d2c43aa"
+    },
+    "sym": {
+      "fileSourcePath": "/Users/mahdi/Work/src/github.com/mahdiidarabi/zk-circuit-from-scratch/zkit/artifacts/circuits/Multiplier.circom/Multiplier.sym",
+      "fileHash": "c29b6997e2825846bf125a803e3c071802dd74c3"
+    },
+    "groth16.zkey": {
+      "fileSourcePath": "/Users/mahdi/Work/src/github.com/mahdiidarabi/zk-circuit-from-scratch/zkit/artifacts/circuits/Multiplier.circom/Multiplier.groth16.zkey",
+      "fileHash": "3a9205ff8ef0d5181b34357bd4f0ffd347ee3b46"
+    },
+    "groth16.vkey": {
+      "fileSourcePath": "/Users/mahdi/Work/src/github.com/mahdiidarabi/zk-circuit-from-scratch/zkit/artifacts/circuits/Multiplier.circom/Multiplier.groth16.vkey.json",
+      "fileHash": "1158cea7e6e12b4c0943215caa609eef06d1eca1"
+    }
+  }
+}
