@@ -32,11 +32,37 @@ npm install circomlib
 In `hardhat.config.ts`, add the import alongside the toolbox:
 
 ```typescript
+import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "@solarity/hardhat-zkit";
+
+const config: HardhatUserConfig = {
+  solidity: "0.8.24",
+  zkit: {
+    circuitsDir: "circuits",
+    compilationSettings: {
+      artifactsDir: "zkit/artifacts",
+      onlyFiles: [],
+      skipFiles: [],
+    },
+    setupSettings: {
+      contributionSettings: {
+        provingSystem: "groth16",
+        contributions: 2,
+      },
+    },
+    verifiersSettings: {
+      verifiersDir: "contracts/verifiers",
+      verifiersType: "sol",
+    },
+    quiet: false,
+  },
+};
+
+export default config;
 ```
 
-Then add a `zkit` config block (see `hardhat.config.ts` for full settings). Confirm tasks are registered with `npx hardhat` — you should see `zkit:make`, `zkit:verifiers`, etc.
+Then add a `zkit` config block (see `hardhat.config.ts` for full settings). Confirm tasks are registered with `npx hardhat` — you should see `zkit make`, `zkit verifiers`, etc.
 
 ## Step 4: Write the circuit
 
